@@ -1,26 +1,41 @@
 anondb
 ======
 
-Proof of concept implementation of a "secret triple store" using [Enigma][enigma].
-It creates a freeform federated data bank for proving assertions about yourself without revealing your identity.
+Naive implementation of a "secret triple store" on [Enigma][enigma].
+It creates a trustless, freeform, federated data bank for proving assertions about yourself without revealing your identity.
+
+This is just proof-of-concept code. However, it should be fairly reliable since the complicated parts map onto existing RDF concepts, and RDF can be validated using the [W3C test site][w3c] (basic) and/or ontology theorum provers (advanced).
+
+The main caveats is that it may need to be optimized to scale to a large number of triples.
 
 Concept
 -------
 
-Any party can add self-signed triples (subject-predicate-object statements) concerning a person to the data bank's encrypted secret contract state, such as:
+Any party can add self-signed statements concerning a person to the data bank's encrypted secret contract state, such as:
 
-* <person>'s public key is <key>
-* <person>'s hardware 2FA device is <device>
+* <person> controls the private key corresponding to <pubkey> (this is self-evident once signed)
+* <person> owns the 2FA device <deviceid>
+* <person>'s social security number is <ssn>
+* <person>'s facial profile hash is <hash>
+* <person>'s fingerprint hash is <hash>
+* <person>'s gender is male
+* <person>'s DNA haplotype is <hash>
 * <person>'s birthday is Aug 29, 1975
-* <person> is of legal drinking age as of 2019
-* <person> qualifies for food stamps as of 2019
+* <person> is of legal drinking age
+* <person> qualifies for food stamps through Dec 31, 2019
 * <person> qualifies to participate the in the <token> ICO
-* <person>'s Experian credit score as of 2019-11-14 is 750
+* <person>'s Experian credit score as of Nov 14, 2019 is 750
 
-Later, the person can sign and execute queries to prove assertions about themself to another party without revealing their identity. The assertions can be simple, such as "I am of legal US drinking age as of today". Or they can be derived from multiple independent sources: "I am a US citizen, and I am over 18 years old, and I am not a felon, and I have a credit score of at least 700".
+Later, the person can sign and execute queries to prove assertions about themself to another party without revealing their identity.
+
+The assertions can be simple, such as "I am of legal US drinking age" or "I am on the whitelist". Or they can be derived from multiple independent sources, which may refer to each other. For example, "I qualify for a $5000 loan fom your bank" might expand to "I am a US citizen, and I am over 18 years old, and I am not a felon, and I have a credit score of at least 700" and be verified using statements from the police + DMV + credit rating agencies.
+
+Although one `<person>` variable is shown above for simplicity, no global identity known to all parties is required. Instead the queries work more like real life identification: "I am the person with access to my phone, whose picture is shown on my passport and/or drivers license, and whose SSN I know". Signing parties can define identity however they want, and queries can mix and match statements from multiple parties.
 
 Examples
 --------
+
+Suppose you want to prove that you can 
 
 You could prove your legal drinking age at a bar without showing the bouncer your drivers' license as follows:
 
@@ -49,14 +64,6 @@ exists ?anon where:
 No unneccesary information is exchanged! The bar gets proof of your age without needing to know your name, birthday, or even home state. They only need to know that you look like your picture and are over 21 according to some valid signatory.
 
 The same system could be extended to work without the DMV by trusting a public notary or corporation to verify IDs.
-
-Rationale
----------
-
-RDF namespaces are a natural fit for a federated model of trust.
-The bar above could optionally allow proving your age via a nongovernmental third party in case you don't have a license, or they could also require you to be a member of a particular organization such as a church or city, or *not* a member of an organization like the local Alcoholics Anonymous.
-
-Unfortunately, triplestores don't scale well compared to traditional databases. However, neither do blockchains so the problem isn't immediate. In the long run, a more efficient data structure may be necessary.
 
 Format
 ------
@@ -107,6 +114,8 @@ How should signatures be used? Do they go in the predicates or separate?
 
 Better name? sigdb, anondb, witsec, secret turtle, he-said-she-said, assert(ive)...
 
+Does this relate to/integrate with keybase?
+
 Simpler example: DMV verfies things itself first?
 
 Do queries have to be signed by the entities involved?
@@ -122,3 +131,4 @@ Something like <person1> nebula:cousin <person2>.
 [enigma]: https://enigma.co
 [foaf]: ???
 [hd]: ???
+[w3c]: ???
