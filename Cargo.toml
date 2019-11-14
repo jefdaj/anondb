@@ -1,0 +1,10 @@
+[package]
+name = "anondb"
+version = "0.1.0"
+authors = ["jefdaj"]
+edition = "2018"
+
+[dependencies]
+rio_api = "0.3.1"
+rio_turtle = "0.3.0"
+rio_xml = "0.3.0"
