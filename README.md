@@ -107,27 +107,6 @@ The predicates would be defined in a separate California DMV ontology signed wit
 while `realid` would probably be defined in terms of another ontology signed by the federal government.
 `birthday` could go either way.
 
-TODO
-----
-
-How should signatures be used? Do they go in the predicates or separate?
-
-Better name? sigdb, anondb, witsec, secret turtle, he-said-she-said, assert(ive)...
-
-Does this relate to/integrate with keybase?
-
-Simpler example: DMV verfies things itself first?
-
-Do queries have to be signed by the entities involved?
-
-What about N-quads?
-
-Is the unique human identity thing really required?
-Where does the DMV's signature get encoded?
-
-Is it possible to execute an arbitrary function/program as a predicate?
-Something like <person1> nebula:cousin <person2>.
-
 [enigma]: https://enigma.co
 [foaf]: ???
 [hd]: ???
