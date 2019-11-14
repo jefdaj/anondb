@@ -1,8 +1,23 @@
 anondb
 ======
 
-Naive implementation of a "secret triple store" using Enigma.
-It enables a freeform, trustless, federated data bank that can be queried to answer questions about people and devices without otherwise compromising their privacy.
+Proof of concept implementation of a "secret triple store" using [Enigma][enigma].
+It creates a freeform federated data bank for proving assertions about yourself without revealing your identity.
+
+Concept
+-------
+
+Any party can add self-signed triples (subject-predicate-object statements) concerning a person to the data bank's encrypted secret contract state, such as:
+
+* <person>'s public key is <key>
+* <person>'s hardware 2FA device is <device>
+* <person>'s birthday is Aug 29, 1975
+* <person> is of legal drinking age as of 2019
+* <person> qualifies for food stamps as of 2019
+* <person> qualifies to participate the in the <token> ICO
+* <person>'s Experian credit score as of 2019-11-14 is 750
+
+Later, the person can sign and execute queries to prove assertions about themself to another party without revealing their identity. The assertions can be simple, such as "I am of legal US drinking age as of today". Or they can be derived from multiple independent sources: "I am a US citizen, and I am over 18 years old, and I am not a felon, and I have a credit score of at least 700".
 
 Examples
 --------
@@ -32,6 +47,8 @@ exists ?anon where:
 ```
 
 No unneccesary information is exchanged! The bar gets proof of your age without needing to know your name, birthday, or even home state. They only need to know that you look like your picture and are over 21 according to some valid signatory.
+
+The same system could be extended to work without the DMV by trusting a public notary or corporation to verify IDs.
 
 Rationale
 ---------
@@ -88,9 +105,9 @@ TODO
 
 How should signatures be used? Do they go in the predicates or separate?
 
-Better name? sigdb, anondb, witsec, secret turtle, he-said-she-said...
+Better name? sigdb, anondb, witsec, secret turtle, he-said-she-said, assert(ive)...
 
-Simpler example without 2fa?
+Simpler example: DMV verfies things itself first?
 
 Do queries have to be signed by the entities involved?
 
@@ -102,5 +119,6 @@ Where does the DMV's signature get encoded?
 Is it possible to execute an arbitrary function/program as a predicate?
 Something like <person1> nebula:cousin <person2>.
 
+[enigma]: https://enigma.co
 [foaf]: ???
 [hd]: ???
