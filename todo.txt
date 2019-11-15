@@ -1,5 +1,7 @@
 which RDF crate(s)? rio or rome
 
+Should anon's private key be required to execute a query?
+
 How should signatures be used? Do they go in the predicates or separate?
 
 Better name? sigdb, anondb, witsec, secret turtle, he-said-she-said, assert(ive)...
