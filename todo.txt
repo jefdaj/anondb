@@ -1,4 +1,4 @@
-which RDF crate(s)? rio or rome
+which RDF crate(s)? rio, rome, sophia?
 
 Should anon's private key be required to execute a query?
 

@@ -1,6 +1,7 @@
 extern crate rio_api;
 extern crate rio_turtle;
 extern crate rio_xml;
+extern crate sophia;
 
 fn main() {
   println!("Hello world!");
