@@ -3,7 +3,7 @@ anondb
 
 A trustless, freeform, federated data bank for proving assertions about yourself without revealing your identity.
 
-This is a naive implementation of a "secret triple store" contract for [Enigma][enigma].
+Implemented as a naive "secret graph store" for [Enigma][enigma].
 It should be fairly reliable since the complicated parts map onto existing RDF concepts,
 and RDF can be validated using the [W3C test site][w3c] (basic) and/or ontology theorum provers (advanced).
 The main caveat is that it may need to be optimized to scale to a large number of triples.
