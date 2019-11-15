@@ -1,4 +1,4 @@
-which RDF crate(s)? rio, rome, rdf-rs, sophia, ...
+which RDF crate(s)? rio or rome
 
 How should signatures be used? Do they go in the predicates or separate?
 

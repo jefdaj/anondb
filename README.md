@@ -4,33 +4,34 @@ anondb
 Naive implementation of a "secret triple store" on [Enigma][enigma].
 It creates a trustless, freeform, federated data bank for proving assertions about yourself without revealing your identity.
 
-This is just proof-of-concept code. However, it should be fairly reliable since the complicated parts map onto existing RDF concepts, and RDF can be validated using the [W3C test site][w3c] (basic) and/or ontology theorum provers (advanced).
+This is just proof-of-concept code. However, it should be fairly reliable since the complicated parts map onto existing RDF concepts,
+and RDF can be validated using the [W3C test site][w3c] (basic) and/or ontology theorum provers (advanced).
 
-The main caveats is that it may need to be optimized to scale to a large number of triples.
+The main caveat is that it may need to be optimized to scale to a large number of triples.
 
 Concept
 -------
 
 Any party can add self-signed statements concerning a person to the data bank's encrypted secret contract state, such as:
 
-* <person> controls the private key corresponding to <pubkey> (this is self-evident once signed)
 * <person> owns the 2FA device <deviceid>
 * <person>'s social security number is <ssn>
 * <person>'s facial profile hash is <hash>
 * <person>'s fingerprint hash is <hash>
+* <person> controls the private key corresponding to <pubkey> (this one is uniquely self-evident once signed)
 * <person>'s gender is male
 * <person>'s DNA haplotype is <hash>
 * <person>'s birthday is Aug 29, 1975
-* <person> is of legal drinking age
+* <person> is of legal US drinking age
 * <person> qualifies for food stamps through Dec 31, 2019
 * <person> qualifies to participate the in the <token> ICO
 * <person>'s Experian credit score as of Nov 14, 2019 is 750
 
-Later, the person can sign and execute queries to prove assertions about themself to another party without revealing their identity.
+Later, `<person>` can sign and execute queries to prove those assertions about themself to another party without revealing their identity.
 
 The assertions can be simple, such as "I am of legal US drinking age" or "I am on the whitelist". Or they can be derived from multiple independent sources, which may refer to each other. For example, "I qualify for a $5000 loan fom your bank" might expand to "I am a US citizen, and I am over 18 years old, and I am not a felon, and I have a credit score of at least 700" and be verified using statements from the police + DMV + credit rating agencies.
 
-Although one `<person>` variable is shown above for simplicity, no global identity known to all parties is required. Instead the queries work more like real life identification: "I am the person with access to my phone, whose picture is shown on my passport and/or drivers license, and whose SSN I know". Signing parties can define identity however they want, and queries can mix and match statements from multiple parties.
+Although one `<person>` variable is shown above for simplicity, no global identity known to all parties is required. Instead the queries work more like real life identification: "I am the person with access to my phone, whose picture is shown on my passport and/or drivers license, and whose SSN I know". Queries can mix and match statements from multiple signing parties, and each party may define identity their own way.
 
 Examples
 --------
