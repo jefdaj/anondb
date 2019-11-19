@@ -37,6 +37,7 @@ fn main() {
   let schema_person = NamedNode { iri: "http://schema.org/Person" };
   let mut count = 0;
   TriGParser::new(file2.as_ref(), "").unwrap().parse_all(&mut |t| {
+      println!("parsed quad: {}", t);
       if t.predicate == rdf_type && t.object == schema_person.into() {
           count += 1;
       }
