@@ -1,5 +1,9 @@
 which RDF crate(s)? rio, rome, sophia?
 
+Can you use the existing linked data signatures spec?
+https://w3c-dvcg.github.io/ld-signatures/
+It doesn't seem quite ready yet, but is probably the right way long term.
+
 Does the graph have to be named just the public key, or should it include something readable?
 
 Should the triples be stored in signed form, or just marked "OK" after the initial check?
