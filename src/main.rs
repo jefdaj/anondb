@@ -17,8 +17,8 @@
 
 // TODO report typo in trig documentation link (capitalize the G)
 
-use rio_turtle::{TriGParser, TurtleError};
-use rio_api::parser::QuadsParser;
+use rio_turtle::{TurtleParser, TurtleError};
+use rio_api::parser::TriplesParser;
 // use rio_api::model::NamedNode;
 use std::fs;
 
@@ -38,13 +38,14 @@ fn main() {
   // let schema_person = NamedNode { iri: "http://schema.org/Person" };
   let mut count = 0;
 
-  let filename = "example02.trig";
-  println!("parsing file: {}", filename);
+  let filename = "example01.ttl";
+  println!("parsing {}...", filename);
   let contents = fs::read_to_string(filename)
       .expect("Something went wrong reading the file");
 
-  TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
-      println!("quad: {}", t);
+  // TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
+  TurtleParser::new(contents.as_ref(), "file:example01.ttl").unwrap().parse_all(&mut |t| {
+      println!("statement: {}", t);
       // println!("\tsubject: {}", t.subject);
       // println!("\tpredicate: {}", t.predicate);
       // println!("\tobject: {}", t.object);
@@ -53,6 +54,6 @@ fn main() {
       // }
       Ok(()) as Result<(), TurtleError>
   }).unwrap();
-  println!("quads read: {}", count);
+  println!("parsed {} statements", count);
   // assert_eq!(2, count)
 }
