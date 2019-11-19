@@ -1,5 +1,7 @@
 which RDF crate(s)? rio, rome, sophia?
 
+Does the graph have to be named just the public key, or should it include something readable?
+
 Should anon's private key be required to execute a query?
 
 How should signatures be used? Do they go in the predicates or separate?
