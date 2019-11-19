@@ -2,6 +2,11 @@ which RDF crate(s)? rio, rome, sophia?
 
 Does the graph have to be named just the public key, or should it include something readable?
 
+Should the triples be stored in signed form, or just marked "OK" after the initial check?
+If storing signed, the entries need to be saved as-is before parsing.
+
+Should signatures be done separately using GPG or similar, or via Enigma.js?
+
 Should anon's private key be required to execute a query?
 
 How should signatures be used? Do they go in the predicates or separate?

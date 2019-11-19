@@ -38,8 +38,9 @@ Data entry
 Data can be entered in any standard RDF format, except that:
 
 * the default graph is reserved for internal use
-* a separate named graph is added per signing party, named by their public key
-* triples (quads really) must be signed by the corresponding private key
+* a separate named graph is added per signing party
+* the graph name must start with their public key
+* all triples must be signed by the corresponding private key
 
 So for example the California DMV might produce data like this as part of issuing a "RealID":
 
