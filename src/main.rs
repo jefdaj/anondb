@@ -24,6 +24,12 @@ use rio_api::parser::QuadsParser;
 use std::fs;
 use docopt::Docopt;
 
+#[macro_use] extern crate log;
+extern crate simplelog;
+
+use simplelog::*;
+use std::fs::File;
+
 const USAGE: &'static str = "
 Usage: anondb <rdf>...
 
@@ -31,26 +37,33 @@ Options:
 ";
 
 fn main() {
+  CombinedLogger::init(
+    vec![
+      TermLogger::new(LevelFilter::Warn, Config::default(), TerminalMode::Mixed).unwrap(),
+      WriteLogger::new(LevelFilter::Info, Config::default(), File::create("anondb.log").unwrap()),
+    ]
+  ).unwrap();
+
   let args = Docopt::new(USAGE)
                      .and_then(|d| d.parse())
                      .unwrap_or_else(|e| e.exit());
   let rdfs = args.get_vec("<rdf>");
-  println!("rdf files to parse: {:?}", rdfs);
+  info!("rdf files to parse: {:?}", rdfs);
 
   // let mut count = 0;
 
   for rdf in rdfs {
-    println!("parsing {:?}...", rdf);
+    info!("parsing {:?}...", rdf);
     let contents = fs::read_to_string(rdf)
         .expect("parse error :(");
 
     TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
-        println!("\t{}", t);
-        println!("\t\ts: {}", t.subject);
-        println!("\t\tp: {}", t.predicate);
-        println!("\t\to: {}", t.object);
+        info!("{}", t);
+        debug!("\ts: {}", t.subject);
+        debug!("\tp: {}", t.predicate);
+        debug!("\to: {}", t.object);
         t.graph_name.expect("error: must supply a named graph");
-        println!("\t\tg: {:?}", t.graph_name);
+        debug!("\tg: {:?}", t.graph_name);
         Ok(()) as Result<(), TurtleError>
     }).unwrap();
   }
