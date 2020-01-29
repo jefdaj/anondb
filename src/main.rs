@@ -45,13 +45,12 @@ fn main() {
         .expect("parse error :(");
 
     TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
-        println!("statement: {}", t);
-        println!("\tsubject: {}", t.subject);
-        println!("\tpredicate: {}", t.predicate);
-        println!("\tobject: {}", t.object);
-        println!("\tgraph: {:?}", t.graph_name);
-        // if t.predicate == rdf_type && t.object == schema_person.into() {
-        // count += 1;
+        println!("\t{}", t);
+        println!("\t\ts: {}", t.subject);
+        println!("\t\tp: {}", t.predicate);
+        println!("\t\to: {}", t.object);
+        t.graph_name.expect("error: must supply a named graph");
+        println!("\t\tg: {:?}", t.graph_name);
         Ok(()) as Result<(), TurtleError>
     }).unwrap();
   }
