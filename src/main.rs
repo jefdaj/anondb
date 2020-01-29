@@ -1,9 +1,11 @@
 // TODO parse any rdf format, either automatically or with a cli format flag
+// 24 days of rust: http://zsiciarz.github.io/24daysofrust/index.html
 
 // extern crate rio_api;
 // extern crate rio_turtle;
 // extern crate rio_xml;
 // extern crate sophia;
+// extern crate docopt;
 
 // fn main() {
 //   println!("Hello world!");
@@ -23,8 +25,22 @@ use rio_turtle::{TriGParser, TurtleError};
 use rio_api::parser::QuadsParser;
 // use rio_api::model::NamedNode;
 use std::fs;
+use docopt::Docopt;
+
+const USAGE: &'static str = "
+Usage: anondb <rdf>...
+
+Options:
+";
 
 fn main() {
+  // Parse argv and exit the program with an error message if it fails.
+  let args = Docopt::new(USAGE)
+                     .and_then(|d| d.parse())
+                     .unwrap_or_else(|e| e.exit());
+  let rdfs = args.get_vec("<rdf>");
+  println!("rdf files to parse: {:?}", rdfs);
+
   // let file = b"<http://example.com/foo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> <http://example.com/> .
   //   <http://example.com/foo> <http://schema.org/name> \"Foo\" <http://example.com/> .
   //   <http://example.com/bar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Person> .
@@ -49,6 +65,7 @@ fn main() {
   TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
   // TurtleParser::new(contents.as_ref(), "file:example01.ttl").unwrap().parse_all(&mut |t| {
       println!("statement: {}", t);
+      // println!("\tgraph: {}", t.graph);
       // println!("\tsubject: {}", t.subject);
       // println!("\tpredicate: {}", t.predicate);
       // println!("\tobject: {}", t.object);
