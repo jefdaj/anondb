@@ -1,3 +1,5 @@
+// TODO parse any rdf format, either automatically or with a cli format flag
+
 // extern crate rio_api;
 // extern crate rio_turtle;
 // extern crate rio_xml;
@@ -17,8 +19,8 @@
 
 // TODO report typo in trig documentation link (capitalize the G)
 
-use rio_turtle::{TurtleParser, TurtleError};
-use rio_api::parser::TriplesParser;
+use rio_turtle::{TriGParser, TurtleError};
+use rio_api::parser::QuadsParser;
 // use rio_api::model::NamedNode;
 use std::fs;
 
@@ -38,13 +40,14 @@ fn main() {
   // let schema_person = NamedNode { iri: "http://schema.org/Person" };
   let mut count = 0;
 
-  let filename = "example01.ttl";
+  // example01.ttl works too, if you use TurtleParser
+  let filename = "example02.trig";
   println!("parsing {}...", filename);
   let contents = fs::read_to_string(filename)
       .expect("Something went wrong reading the file");
 
-  // TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
-  TurtleParser::new(contents.as_ref(), "file:example01.ttl").unwrap().parse_all(&mut |t| {
+  TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
+  // TurtleParser::new(contents.as_ref(), "file:example01.ttl").unwrap().parse_all(&mut |t| {
       println!("statement: {}", t);
       // println!("\tsubject: {}", t.subject);
       // println!("\tpredicate: {}", t.predicate);
