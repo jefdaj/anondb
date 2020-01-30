@@ -30,6 +30,8 @@ extern crate simplelog;
 use simplelog::*;
 use std::fs::File;
 
+use oxigraph::sparql::*;
+
 const USAGE: &'static str = "
 Usage: anondb <rdf>...
 
