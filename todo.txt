@@ -1,3 +1,7 @@
+Keep an eye on https://github.com/Tpt/oxigraph!
+  It looks like it might be the thing to use once stable.
+  But no support for FROM NAMED yet :(
+
 which RDF crate(s)? rio, rome, sophia?
 
 Can you use the existing linked data signatures spec?
