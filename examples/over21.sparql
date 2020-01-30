@@ -1,0 +1,9 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dmv: <http://www.example.org/dmv#>
+PREFIX : <http://www.example.org/exampleDocument#>
+
+ASK {
+  ?anon dmv:name "Monica Murphy" .      
+  ?anon dmv:over21 true .
+}

@@ -72,16 +72,8 @@ fn main() {
   // println!("parsed {} statements", count);
 
   // parse a SPARQL query too
-  let raw_query = "\n\
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n\
-    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\
-    PREFIX dmv: <http://www.example.org/dmv#>\n\
-    PREFIX : <http://www.example.org/exampleDocument#>\n\
-    SELECT *\n\
-    WHERE {\n\
-      ?anon dmv:name \"Monica Murphy\" .\n\
-      ?anon dmv:over21 true .\n\
-    }";
+  let raw_query = fs::read_to_string("examples/over21.sparql")
+                      .expect("parse error :(");
   match Query::parse(&raw_query, None) {
     Err(error) => panic!("Parse failure: {}", error),
     Ok(query) => {
