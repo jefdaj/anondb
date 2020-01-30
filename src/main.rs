@@ -30,7 +30,12 @@ extern crate simplelog;
 use simplelog::*;
 use std::fs::File;
 
-use oxigraph::sparql::*;
+// mod testdb; // test database constructed from files at runtime
+use oxigraph::model::*;
+use oxigraph::{Repository, RepositoryConnection, MemoryRepository, Result};
+use oxigraph::sparql::{PreparedQuery, QueryOptions};
+use oxigraph::sparql::QueryResult;
+
 
 const USAGE: &'static str = "
 Usage: anondb <rdf>...
@@ -59,25 +64,41 @@ fn main() {
     let contents = fs::read_to_string(rdf)
         .expect("parse error :(");
 
-    TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
-        info!("{}", t);
-        debug!("subject: {}", t.subject);
-        debug!("predicate: {}", t.predicate);
-        debug!("object: {}", t.object);
-        t.graph_name.expect("error: must supply a named graph");
-        debug!("graph: {:?}", t.graph_name);
-        Ok(()) as Result<(), TurtleError>
-    }).unwrap();
+    // TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
+    //     info!("{}", t);
+    //     debug!("subject: {}", t.subject);
+    //     debug!("predicate: {}", t.predicate);
+    //     debug!("object: {}", t.object);
+    //     t.graph_name.expect("error: must supply a named graph");
+    //     debug!("graph: {:?}", t.graph_name);
+    //     Ok(()) as Result<(), TurtleError>
+    // }).unwrap();
   }
   // println!("parsed {} statements", count);
 
   // parse a SPARQL query too
-  let raw_query = fs::read_to_string("examples/over21.sparql")
-                      .expect("parse error :(");
-  match Query::parse(&raw_query, None) {
-    Err(error) => panic!("Parse failure: {}", error),
-    Ok(query) => {
-      info!("{}", query.to_string());
-    }
-  }
+  // let raw_query = fs::read_to_string("examples/over21.sparql")
+  //                     .expect("parse error :(");
+  // match Query::parse(&raw_query, None) {
+  //   Err(error) => panic!("Parse failure: {}", error),
+  //   Ok(query) => {
+  //     info!("{}", query.to_string());
+  //   }
+  // }
+
+  // try making an in-memory oxigraph repository and querying it
+  // based on:
+  // https://github.com/Tpt/oxigraph/blob/master/lib/src/repository.rs
+  // https://github.com/Tpt/oxigraph/blob/master/lib/tests/sparql_test_cases.rs
+  let repository = MemoryRepository::default();
+  let mut connection = repository.connection().unwrap();
+  let ex = NamedNode::parse("http://example.com").unwrap();
+  let quad = Quad::new(ex.clone(), ex.clone(), ex.clone(), None);
+  connection.insert(&quad);
+  let prepared_query = connection.prepare_query("SELECT ?s WHERE { ?s ?p ?o }", QueryOptions::default()).unwrap();
+  let results = prepared_query.exec().unwrap();
+  if let QueryResult::Bindings(results) = results {
+  //   assert_eq!(results.into_values_iter().next().unwrap()?[0], Some(ex.into()));
+    info!("results: {:?}", results.into_values_iter().next().unwrap().unwrap()[0]);
+  };
 }
