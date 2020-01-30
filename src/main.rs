@@ -40,7 +40,7 @@ fn main() {
   CombinedLogger::init(
     vec![
       TermLogger::new(LevelFilter::Warn, Config::default(), TerminalMode::Mixed).unwrap(),
-      WriteLogger::new(LevelFilter::Info, Config::default(), File::create("anondb.log").unwrap()),
+      WriteLogger::new(LevelFilter::Debug, Config::default(), File::create("anondb.log").unwrap()),
     ]
   ).unwrap();
 
@@ -59,11 +59,11 @@ fn main() {
 
     TriGParser::new(contents.as_ref(), "").unwrap().parse_all(&mut |t| {
         info!("{}", t);
-        debug!("\ts: {}", t.subject);
-        debug!("\tp: {}", t.predicate);
-        debug!("\to: {}", t.object);
+        debug!("subject: {}", t.subject);
+        debug!("predicate: {}", t.predicate);
+        debug!("object: {}", t.object);
         t.graph_name.expect("error: must supply a named graph");
-        debug!("\tg: {:?}", t.graph_name);
+        debug!("graph: {:?}", t.graph_name);
         Ok(()) as Result<(), TurtleError>
     }).unwrap();
   }
