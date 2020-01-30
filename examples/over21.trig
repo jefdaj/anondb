@@ -1,0 +1,9 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dmv: <http://www.example.org/dmv#> .
+@prefix : <http://www.example.org/exampleDocument#> .
+
+:DMV { :anon dmv:name "Monica Murphy" .      
+       :anon dmv:address "123 House St" .
+       :anon dmv:over21 true .
+       :anon dmv:issued "2020-02-22T15:12:30-08:00"^^xsd:dateTime . }
